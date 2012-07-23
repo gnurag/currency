@@ -1,16 +1,15 @@
 #!/usr/bin/env ruby
 require 'rubygems'
-require 'hpricot'
+require 'nokogiri'
 require 'open-uri'
 
 FPAGE = 'http://finance.yahoo.com/q?s=USDINR=X'
-XPATH = '/html/body/div/div[2]/div[4]/div[2]/div/div[2]/table/tr/td/big/b/span/'
+XPATH = '//span[@id="yfs_l10_usdinr=x"]'
 
 amount = (ARGV.length == 1) ? ARGV[0].to_f : 1
 amount = 1 if amount == 0
 
-doc = Hpricot(URI.parse( FPAGE ).read)
+doc = Nokogiri::XML(URI.parse( FPAGE ).read)
 element = doc.search( XPATH )
-exchange_rate = element[0].to_s.to_f
+exchange_rate = element[0].children[0].to_s.to_f
 puts "#{amount} USD = #{amount * exchange_rate} INR"
-
