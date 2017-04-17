@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
+# coding: utf-8
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
-FPAGE = 'http://finance.yahoo.com/q?s=USDINR=X'
-XPATH = '//span[@id="yfs_l10_usdinr=x"]'
+FPAGE = 'https://finance.yahoo.com/quote/USDINR=X?ltr=1'
+XPATH = '//*[@id="quote-header-info"]/div[2]/div[1]/div/span[1]'
 
 amount = (ARGV.length == 1) ? ARGV[0].to_f : 1
 amount = 1 if amount == 0
@@ -12,4 +13,4 @@ amount = 1 if amount == 0
 doc = Nokogiri::XML(URI.parse( FPAGE ).read)
 element = doc.search( XPATH )
 exchange_rate = element[0].children[0].to_s.to_f
-puts "#{amount} USD = #{amount * exchange_rate} INR"
+puts "$#{format('%.2f',amount)} = ₹#{format('%.2f', (amount * exchange_rate))}"
