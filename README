@@ -1,5 +1,5 @@
 I keep looking at stuff and try guessing its price in INR. Invoke an
 instance of irb, check USD exchange rate and punch it in.
 
-Now i no longer have to. Just running $ usdinr 197.21 gives the amount
+Now I no longer have to. Just running `usdinr 197.21` gives the amount
 in INR. Save the files in /usr/bin/ and give execute permissions.
